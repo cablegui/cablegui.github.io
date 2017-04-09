@@ -26,3 +26,20 @@ So Simple takes advantage of Sass and data files to make customizing easier and 
 To learn how to install and use this theme check out the [Setup Guide](http://mmistakes.github.io/so-simple-theme/theme-setup/) for more information.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mmistakes/so-simple-theme/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
+
+## Generate data for example
+
+We generate data such that the confounders, a1 and a2, affect both the features, x1 and x2, as well as the class labels, d.
+
+
+N.B. If some of the estimated weights are extremely large, one may consider truncating the predicted probabilities (e.g., at the 5th percentile) or using stabilized weights. Define $S_i = pr(d_i=1 | a1_i, a2_i)$ and $M_i = pr(d_i=1)$ as well as corresponding estimates \hat{S}_i = \hat{pr}(d_i=1 | a1_i, a2_i) and \hat{M}_i = \hat{pr}(d_i=1), Then, stabilized weights and their corresponding estimates are defined, respectively, as:
+$$
+W*_i = d_{i}*(M_i/S_i) + (1-d_{i})*(1-M_i)/(1-S_i) 
+$$
+and fun
+$$
+\hat{W*}_i = d_{i}*(\hat{M}_i/\hat{S}_i) + (1-d_{i})*(1-\hat{M}_i)/(1-\hat{S}_i) 
+$$
+
+## Train the inverse probability weighted SVM (IPW-SVM)

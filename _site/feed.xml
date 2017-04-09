@@ -1,4 +1,345 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-04-05T01:51:54+02:00</updated><id>http://localhost:4000/</id><title type="html">Risky stuff</title><subtitle>Statistics, Risk, Stress testing, Data stuff with R</subtitle><entry><title type="html">My test web page</title><link href="http://localhost:4000/r_stuff/test/" rel="alternate" type="text/html" title="My test web page" /><published>2017-03-28T00:00:00+02:00</published><updated>2017-03-28T00:00:00+02:00</updated><id>http://localhost:4000/r_stuff/test</id><content type="html" xml:base="http://localhost:4000/r_stuff/test/">&lt;h2 id=&quot;r-markdown&quot;&gt;R Markdown&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2017-04-09T14:08:14+02:00</updated><id>/</id><title type="html">Risky stuff</title><subtitle>Statistics, Risk, Stress testing, Data stuff with R</subtitle><entry><title type="html">Understanding statistics</title><link href="/r_stuff/Statistics_Chapter1/" rel="alternate" type="text/html" title="Understanding statistics" /><published>2017-04-09T00:00:00+02:00</published><updated>2017-04-09T00:00:00+02:00</updated><id>/r_stuff/Statistics_Chapter1</id><content type="html" xml:base="/r_stuff/Statistics_Chapter1/">&lt;h2 id=&quot;the-goal&quot;&gt;The goal&lt;/h2&gt;
+
+&lt;p&gt;In this first chapter lets learn how to display and interpret data using some common display tools using R. Lets use the Mutual Funds.xls data which contains data on 259 mutual funds with some qualitative information on the fund type, objectives and risk buckets but also gives some quantitative performance metrics like 3 Year and 5 Year returns and best and worst quarter returns.&lt;/p&gt;
+
+&lt;p&gt;Lets start our journey into understanding data with the simplest plot for quantitative information which is the stem and leaf plot.&lt;/p&gt;
+
+&lt;h2 id=&quot;presenting-data&quot;&gt;Presenting data&lt;/h2&gt;
+
+&lt;h3 id=&quot;stem-and-leaf-plot&quot;&gt;Stem and Leaf plot&lt;/h3&gt;
+
+&lt;p&gt;The stem and leaf plot is a simple plot which separates the data entries into leading digits or stems and trailing digits or leaves. The plot basically shows how the values distribute and cluster over the range of the observations in the data set.&lt;/p&gt;
+
+&lt;p&gt;In R there is a function called stem which is very suitable to display this data. It takes in 4 arguments out of which the first 2 are the most important. The first argument is an ordered vector of a variable and the second argument controls the height of the plot.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlsx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## Loading required package: rJava
+
+## Loading required package: xlsxjars
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read.xlsx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;./data/Mutual Funds.xls&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sheetName&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Data&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;##                                  Fund       Type Objective Assets Fees
+## 1 ABN Amro Montag &amp;amp; Calswell Growth I large cap     Growth 1184.9   No
+## 2             AIM Aggressive Growth A small cap     Growth 2639.2  Yes
+## 3                   Aim Basic Value A large cap      Value 1863.9  Yes
+## 4              Aim Small Cap Growth A small cap     Growth  602.2  Yes
+## 5                        AIM Summit I large cap     Growth 1912.5  Yes
+## 6                         AIM Value B large cap     Growth 9232.2   No
+##   Expense.ratio Return.2001 X3.Yr.Return X5.Yr.Return Turnover    Risk
+## 1          0.77       -13.1         -0.2         11.7      low average
+## 2          1.04       -26.0          3.4          5.4      low    high
+## 3          1.32         0.1         16.7         16.7  average     low
+## 4          1.13       -13.8         17.7         18.5      low    high
+## 5          0.72       -33.8         -5.2          7.3  average    high
+## 6          1.77       -13.6         -2.1          8.8  average average
+##   Best.Quarter Worst.Quarter
+## 1         27.1         -15.5
+## 2         31.4         -24.7
+## 3         21.1         -17.3
+## 4         38.1         -24.4
+## 5         37.1         -30.3
+## 6         27.1         -16.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Order the 5 Year returns of the 259 Mutual funds
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_order_5yr_return&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.Yr.Return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;order&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.Yr.Return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_order_5yr_return&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;##   [1] -6.1 -2.8 -1.2 -0.7  0.5  1.8  1.9  2.5  2.8  2.8  3.3  3.5  3.8  3.8
+##  [15]  4.0  4.2  4.3  4.4  4.5  4.6  4.8  5.0  5.1  5.2  5.4  5.4  5.5  5.5
+##  [29]  5.8  5.9  6.0  6.2  6.3  6.4  6.5  6.5  6.6  6.6  6.6  6.8  6.8  7.0
+##  [43]  7.0  7.1  7.1  7.2  7.2  7.3  7.5  7.5  7.6  7.6  7.6  7.6  7.8  7.8
+##  [57]  7.8  7.9  7.9  8.1  8.1  8.1  8.2  8.2  8.2  8.2  8.3  8.3  8.4  8.4
+##  [71]  8.4  8.4  8.4  8.5  8.5  8.5  8.5  8.6  8.8  8.8  8.8  8.8  8.8  9.0
+##  [85]  9.0  9.0  9.1  9.1  9.1  9.2  9.3  9.3  9.3  9.4  9.4  9.4  9.4  9.5
+##  [99]  9.5  9.5  9.5  9.5  9.6  9.6  9.6  9.7  9.8  9.8  9.9  9.9  9.9  9.9
+## [113]  9.9 10.0 10.0 10.0 10.1 10.1 10.1 10.1 10.2 10.2 10.3 10.3 10.4 10.4
+## [127] 10.5 10.5 10.5 10.5 10.5 10.5 10.6 10.6 10.7 10.7 10.7 10.8 10.9 10.9
+## [141] 10.9 10.9 11.0 11.0 11.0 11.1 11.1 11.1 11.1 11.2 11.2 11.2 11.3 11.3
+## [155] 11.3 11.3 11.4 11.5 11.5 11.5 11.6 11.7 11.7 11.7 11.8 11.9 11.9 11.9
+## [169] 12.0 12.1 12.1 12.1 12.2 12.2 12.2 12.2 12.2 12.3 12.3 12.3 12.4 12.4
+## [183] 12.5 12.5 12.5 12.5 12.5 12.6 12.7 12.9 12.9 12.9 12.9 12.9 13.0 13.0
+## [197] 13.1 13.2 13.2 13.3 13.3 13.4 13.4 13.5 13.7 13.7 13.9 14.0 14.1 14.2
+## [211] 14.7 14.8 14.8 14.9 14.9 15.0 15.0 15.1 15.2 15.2 15.4 15.4 15.6 15.6
+## [225] 15.7 15.7 15.8 15.8 15.8 16.0 16.3 16.5 16.7 16.9 17.0 17.0 17.0 17.1
+## [239] 17.6 17.7 17.8 18.1 18.1 18.2 18.2 18.5 18.5 18.5 18.6 18.7 18.9 19.7
+## [253] 21.4 21.4 21.4 22.0 22.9 25.0 26.3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;stem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_order_5yr_return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## 
+##   The decimal point is at the |
+## 
+##   -6 | 1
+##   -5 | 
+##   -4 | 
+##   -3 | 
+##   -2 | 8
+##   -1 | 2
+##   -0 | 7
+##    0 | 5
+##    1 | 89
+##    2 | 588
+##    3 | 3588
+##    4 | 0234568
+##    5 | 012445589
+##    6 | 02345566688
+##    7 | 001122355666688899
+##    8 | 111222233444445555688888
+##    9 | 000111233344445555566678899999
+##   10 | 00011112233445555556677789999
+##   11 | 00011112223333455567778999
+##   12 | 01112222233344555556799999
+##   13 | 0012233445779
+##   14 | 01278899
+##   15 | 00122446677888
+##   16 | 03579
+##   17 | 0001678
+##   18 | 1122555679
+##   19 | 7
+##   20 | 
+##   21 | 444
+##   22 | 09
+##   23 | 
+##   24 | 
+##   25 | 0
+##   26 | 3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;interpretation&quot;&gt;Interpretation&lt;/h4&gt;
+
+&lt;p&gt;There are 4 mutual funds delivering -ve returns and 7 delivering returns &amp;gt; 20%. Most of the funds have returns between 8% to 12% returns.&lt;/p&gt;
+
+&lt;h4 id=&quot;what-is-the-stem-and-leaf-graph-good-for&quot;&gt;What is the stem and leaf graph good for&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It separates each data into groups: &lt;strong&gt;Separation&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;It shows asymmetry in the data: &lt;strong&gt;Assymetry&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;It visually shows irregularities: &lt;strong&gt;Irregularities&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;It shows where most of the data is centered: &lt;strong&gt;Centering&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;what-does-the-stem-and-leaf-graph-not-tell-you&quot;&gt;What does the stem and leaf graph not tell you&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Its not easy to visualize categorical plots. For example if one wants to visualize the 5 year returns based on mutual fund objectives&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;##                                  Fund       Type Objective Assets Fees
+## 1 ABN Amro Montag &amp;amp; Calswell Growth I large cap     Growth 1184.9   No
+## 2             AIM Aggressive Growth A small cap     Growth 2639.2  Yes
+## 3                   Aim Basic Value A large cap      Value 1863.9  Yes
+## 4              Aim Small Cap Growth A small cap     Growth  602.2  Yes
+## 5                        AIM Summit I large cap     Growth 1912.5  Yes
+## 6                         AIM Value B large cap     Growth 9232.2   No
+##   Expense.ratio Return.2001 X3.Yr.Return X5.Yr.Return Turnover    Risk
+## 1          0.77       -13.1         -0.2         11.7      low average
+## 2          1.04       -26.0          3.4          5.4      low    high
+## 3          1.32         0.1         16.7         16.7  average     low
+## 4          1.13       -13.8         17.7         18.5      low    high
+## 5          0.72       -33.8         -5.2          7.3  average    high
+## 6          1.77       -13.6         -2.1          8.8  average average
+##   Best.Quarter Worst.Quarter
+## 1         27.1         -15.5
+## 2         31.4         -24.7
+## 3         21.1         -17.3
+## 4         38.1         -24.4
+## 5         37.1         -30.3
+## 6         27.1         -16.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#Get the levels of the Objectives: Growth and Value
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;levels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Objective&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## [1] &quot;Growth&quot; &quot;Value&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.Yr.Return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Objective&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%in%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Growth&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return_5Yr_Growth&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;order&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;##   [1] -6.1 -2.8 -1.2 -0.7  0.5  1.8  1.9  2.5  2.8  3.3  3.5  3.8  3.8  4.0
+##  [15]  4.2  4.3  4.5  4.6  5.0  5.1  5.2  5.4  5.5  5.8  5.9  6.0  6.2  6.3
+##  [29]  6.5  6.5  7.0  7.1  7.1  7.2  7.2  7.3  7.5  7.6  7.6  7.8  7.8  7.8
+##  [43]  7.9  8.1  8.1  8.2  8.3  8.3  8.4  8.5  8.5  8.5  8.6  8.8  8.8  8.8
+##  [57]  9.0  9.0  9.1  9.1  9.1  9.2  9.3  9.3  9.5  9.5  9.5  9.5  9.6  9.6
+##  [71]  9.7  9.8  9.9  9.9  9.9  9.9 10.0 10.1 10.1 10.1 10.2 10.3 10.3 10.4
+##  [85] 10.5 10.5 10.5 10.5 10.5 10.5 10.6 10.7 10.7 10.8 10.9 11.0 11.0 11.1
+##  [99] 11.1 11.1 11.2 11.2 11.3 11.3 11.3 11.3 11.4 11.5 11.5 11.5 11.6 11.7
+## [113] 11.7 11.9 11.9 12.2 12.2 12.3 12.3 12.4 12.5 12.7 12.9 12.9 12.9 13.0
+## [127] 13.1 13.2 13.4 13.4 13.7 13.7 13.9 14.1 14.7 14.8 14.9 15.0 15.7 15.8
+## [141] 15.8 16.0 16.9 17.0 17.0 17.6 17.8 18.1 18.1 18.2 18.5 18.5 18.7 18.9
+## [155] 21.4 22.0 22.9 26.3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.Yr.Return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Objective&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%in%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Value&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return_5Yr_Value&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;order&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;##   [1]  2.8  4.4  4.8  5.4  5.5  6.4  6.6  6.6  6.6  6.8  6.8  7.0  7.5  7.6
+##  [15]  7.6  7.9  8.1  8.2  8.2  8.2  8.4  8.4  8.4  8.4  8.5  8.8  8.8  9.0
+##  [29]  9.3  9.4  9.4  9.4  9.4  9.5  9.6  9.8  9.9 10.0 10.0 10.1 10.2 10.4
+##  [43] 10.6 10.7 10.9 10.9 10.9 11.0 11.1 11.2 11.7 11.8 11.9 12.0 12.1 12.1
+##  [57] 12.1 12.2 12.2 12.2 12.3 12.4 12.5 12.5 12.5 12.5 12.6 12.9 12.9 13.0
+##  [71] 13.2 13.3 13.3 13.5 14.0 14.2 14.8 14.9 15.0 15.1 15.2 15.2 15.4 15.4
+##  [85] 15.6 15.6 15.7 15.8 16.3 16.5 16.7 17.0 17.1 17.7 18.2 18.5 18.6 19.7
+##  [99] 21.4 21.4 25.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;stem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return_5Yr_Growth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## 
+##   The decimal point is at the |
+## 
+##   -6 | 1
+##   -5 | 
+##   -4 | 
+##   -3 | 
+##   -2 | 8
+##   -1 | 2
+##   -0 | 7
+##    0 | 5
+##    1 | 89
+##    2 | 58
+##    3 | 3588
+##    4 | 02356
+##    5 | 0124589
+##    6 | 02355
+##    7 | 0112235668889
+##    8 | 1123345556888
+##    9 | 00111233555566789999
+##   10 | 0111233455555567789
+##   11 | 00111223333455567799
+##   12 | 2233457999
+##   13 | 01244779
+##   14 | 1789
+##   15 | 0788
+##   16 | 09
+##   17 | 0068
+##   18 | 1125579
+##   19 | 
+##   20 | 
+##   21 | 4
+##   22 | 09
+##   23 | 
+##   24 | 
+##   25 | 
+##   26 | 3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;stem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return_5Yr_Value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## 
+##   The decimal point is at the |
+## 
+##    2 | 8
+##    3 | 
+##    4 | 48
+##    5 | 45
+##    6 | 466688
+##    7 | 05669
+##    8 | 12224444588
+##    9 | 0344445689
+##   10 | 0012467999
+##   11 | 012789
+##   12 | 0111222345555699
+##   13 | 02335
+##   14 | 0289
+##   15 | 0122446678
+##   16 | 357
+##   17 | 017
+##   18 | 256
+##   19 | 7
+##   20 | 
+##   21 | 44
+##   22 | 
+##   23 | 
+##   24 | 
+##   25 | 0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You see that its not visually easy to compare the two plots.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The stem and leaf plots are fine for small data sets. Its better to use histograms for larger datasets.&lt;/li&gt;
+  &lt;li&gt;For large data sets the center of the distribution is not clearly visible.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;histogram&quot;&gt;Histogram&lt;/h3&gt;
+
+&lt;p&gt;When there are a large number of observations, its useful to summarise the data using a histogram. A histogram is used to describe numerical data that have been grouped into frequency, relative frequency or percentage distributions. The variable of interest is plotted along the x axis grouped in intervals and the number of or percentage or proportion is plotted along the y axis.&lt;/p&gt;
+
+&lt;p&gt;Lets now construct a histogram of the 5 year returns of mutual funds data.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.Yr.Return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_histogram&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;2017-04-09-Statistics_Chapter1_files/figure-markdown_github/Chap1-Histogram.png&quot; alt=&quot;Fig1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Lets change the bin width to make things a bit clearer&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.Yr.Return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_histogram&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binwidth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;2017-04-09-Statistics_Chapter1_files/figure-markdown_github/Chap1-Histogram-2.png&quot; alt=&quot;Fig1-1&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;barplot&quot;&gt;Barplot&lt;/h3&gt;
+
+&lt;p&gt;What about a bar plot? The bar plot will plot each and every point of the data rather than binning the data in ranges.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mf_return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.Yr.Return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;2017-04-09-Statistics_Chapter1_files/figure-markdown_github/Chap1-Bar.png&quot; alt=&quot;Fig2&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;inserting-equations&quot;&gt;Inserting equations&lt;/h3&gt;
+
+&lt;p&gt;Here is an equation inline \(\frac{x}{y}\).&lt;/p&gt;</content><author><name>Neville Andrade</name></author><summary type="html">The goal</summary></entry><entry><title type="html">My test web page</title><link href="/r_stuff/test/" rel="alternate" type="text/html" title="My test web page" /><published>2017-03-28T00:00:00+02:00</published><updated>2017-03-28T00:00:00+02:00</updated><id>/r_stuff/test</id><content type="html" xml:base="/r_stuff/test/">&lt;h2 id=&quot;r-markdown&quot;&gt;R Markdown&lt;/h2&gt;
 
 &lt;p&gt;This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;a href=&quot;http://rmarkdown.rstudio.com&quot;&gt;http://rmarkdown.rstudio.com&lt;/a&gt;.&lt;/p&gt;
 
@@ -24,7 +365,7 @@
 
 &lt;p&gt;&lt;img src=&quot;testPage1_files/figure-markdown_github/pressure-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Note that the &lt;code class=&quot;highlighter-rouge&quot;&gt;echo = FALSE&lt;/code&gt; parameter was added to the code chunk to prevent printing of the R code that generated the plot.&lt;/p&gt;</content><author><name>Neville Andrade</name></author><summary type="html">R Markdown</summary></entry><entry><title type="html">MathJax Example</title><link href="http://localhost:4000/blog/mathjax-example/" rel="alternate" type="text/html" title="MathJax Example" /><published>2015-08-10T14:08:50+02:00</published><updated>2015-08-10T14:08:50+02:00</updated><id>http://localhost:4000/blog/mathjax-example</id><content type="html" xml:base="http://localhost:4000/blog/mathjax-example/">&lt;p&gt;&lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; is a simple way of including Tex/LaTex/MathML based mathematics in HTML webpages. To get up and running you need to include the MathJax script in the header of your github pages page, and then write some maths. For LaTex, there are two delimiters you need to know about, one for block or displayed mathematics &lt;code class=&quot;highlighter-rouge&quot;&gt;\[ ... \]&lt;/code&gt;, and the other for inline mathematics &lt;code class=&quot;highlighter-rouge&quot;&gt;\( ... \)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Note that the &lt;code class=&quot;highlighter-rouge&quot;&gt;echo = FALSE&lt;/code&gt; parameter was added to the code chunk to prevent printing of the R code that generated the plot.&lt;/p&gt;</content><author><name>Neville Andrade</name></author><summary type="html">R Markdown</summary></entry><entry><title type="html">MathJax Example</title><link href="/blog/mathjax-example/" rel="alternate" type="text/html" title="MathJax Example" /><published>2015-08-10T14:08:50+02:00</published><updated>2015-08-10T14:08:50+02:00</updated><id>/blog/mathjax-example</id><content type="html" xml:base="/blog/mathjax-example/">&lt;p&gt;&lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; is a simple way of including Tex/LaTex/MathML based mathematics in HTML webpages. To get up and running you need to include the MathJax script in the header of your github pages page, and then write some maths. For LaTex, there are two delimiters you need to know about, one for block or displayed mathematics &lt;code class=&quot;highlighter-rouge&quot;&gt;\[ ... \]&lt;/code&gt;, and the other for inline mathematics &lt;code class=&quot;highlighter-rouge&quot;&gt;\( ... \)&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
 
@@ -43,7 +384,7 @@
 &lt;p&gt;Here is an example MathJax inline rendering \( 1/x^{2} \), and here is a block rendering: 
 \[ \frac{1}{n^{2}} \]&lt;/p&gt;
 
-&lt;p&gt;The only thing to look out for is the escaping of the backslash when using markdown, so the delimiters become &lt;code class=&quot;highlighter-rouge&quot;&gt;\\[ ... \\]&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;\\( ... \\)&lt;/code&gt; for inline and block maths respectively.&lt;/p&gt;</content><summary type="html">MathJax is a simple way of including Tex/LaTex/MathML based mathematics in HTML webpages. To get up and running you need to include the MathJax script in the header of your github pages page, and then write some maths. For LaTex, there are two delimiters you need to know about, one for block or displayed mathematics \[ ... \], and the other for inline mathematics \( ... \).</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000{&quot;feature&quot;=&gt;nil}" /></entry><entry><title type="html">Hello World</title><link href="http://localhost:4000/blog/hello-world/" rel="alternate" type="text/html" title="Hello World" /><published>2014-08-08T21:39:55+02:00</published><updated>2014-08-08T21:39:55+02:00</updated><id>http://localhost:4000/blog/hello-world</id><content type="html" xml:base="http://localhost:4000/blog/hello-world/">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory - edit this post and re-build (or run with the &lt;code class=&quot;highlighter-rouge&quot;&gt;-w&lt;/code&gt; switch) to see your changes!
+&lt;p&gt;The only thing to look out for is the escaping of the backslash when using markdown, so the delimiters become &lt;code class=&quot;highlighter-rouge&quot;&gt;\\[ ... \\]&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;\\( ... \\)&lt;/code&gt; for inline and block maths respectively.&lt;/p&gt;</content><summary type="html">MathJax is a simple way of including Tex/LaTex/MathML based mathematics in HTML webpages. To get up and running you need to include the MathJax script in the header of your github pages page, and then write some maths. For LaTex, there are two delimiters you need to know about, one for block or displayed mathematics \[ ... \], and the other for inline mathematics \( ... \).</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{&quot;feature&quot;=&gt;nil}" /></entry><entry><title type="html">Hello World</title><link href="/blog/hello-world/" rel="alternate" type="text/html" title="Hello World" /><published>2014-08-08T21:39:55+02:00</published><updated>2014-08-08T21:39:55+02:00</updated><id>/blog/hello-world</id><content type="html" xml:base="/blog/hello-world/">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory - edit this post and re-build (or run with the &lt;code class=&quot;highlighter-rouge&quot;&gt;-w&lt;/code&gt; switch) to see your changes!
 To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention: YYYY-MM-DD-name-of-post.ext.&lt;/p&gt;
 
 &lt;h2 id=&quot;sample-heading&quot;&gt;Sample Heading&lt;/h2&gt;
@@ -61,7 +402,7 @@ To add new posts, simply add a file in the &lt;code class=&quot;highlighter-roug
 &lt;/div&gt;
 
 &lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;.&lt;/p&gt;</content><summary type="html">You’ll find this post in your _posts directory - edit this post and re-build (or run with the -w switch) to see your changes!
-To add new posts, simply add a file in the _posts directory that follows the convention: YYYY-MM-DD-name-of-post.ext.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000{&quot;feature&quot;=&gt;nil}" /></entry><entry><title type="html">Override Author Byline Test Post</title><link href="http://localhost:4000/articles/author-override/" rel="alternate" type="text/html" title="Override Author Byline Test Post" /><published>2014-06-19T00:00:00+02:00</published><updated>2014-06-19T00:00:00+02:00</updated><id>http://localhost:4000/articles/author-override</id><content type="html" xml:base="http://localhost:4000/articles/author-override/">&lt;p&gt;For those of you who may have content written by multiple authors on your site you can now assign different authors to each post if desired.&lt;/p&gt;
+To add new posts, simply add a file in the _posts directory that follows the convention: YYYY-MM-DD-name-of-post.ext.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{&quot;feature&quot;=&gt;nil}" /></entry><entry><title type="html">Override Author Byline Test Post</title><link href="/articles/author-override/" rel="alternate" type="text/html" title="Override Author Byline Test Post" /><published>2014-06-19T00:00:00+02:00</published><updated>2014-06-19T00:00:00+02:00</updated><id>/articles/author-override</id><content type="html" xml:base="/articles/author-override/">&lt;p&gt;For those of you who may have content written by multiple authors on your site you can now assign different authors to each post if desired.&lt;/p&gt;
 
 &lt;p&gt;Previously the theme used a global author for the entire site and those attributes would be used in all bylines, social networking links, Twitter Card attribution, and Google Authorship. These &lt;code class=&quot;highlighter-rouge&quot;&gt;owner&lt;/code&gt; variables were defined in &lt;code class=&quot;highlighter-rouge&quot;&gt;config.yml&lt;/code&gt;&lt;/p&gt;
 
@@ -94,7 +435,7 @@ To add new posts, simply add a file in the _posts directory that follows the con
 
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;billy_rick&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;</content><author><name>Billy Rick</name><email>billy@rick.com</email></author><category term="sample-post" /><category term="readability" /><category term="test" /><summary type="html">An article to test overriding the default site author.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000{&quot;feature&quot;=&gt;&quot;so-simple-sample-image-7.jpg&quot;, &quot;credit&quot;=&gt;&quot;WeGraphics&quot;, &quot;creditlink&quot;=&gt;&quot;http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/&quot;}" /></entry><entry><title type="html">Syntax Highlighting Post</title><link href="http://localhost:4000/articles/code-highlighting-post/" rel="alternate" type="text/html" title="Syntax Highlighting Post" /><published>2013-08-16T00:00:00+02:00</published><updated>2013-08-16T00:00:00+02:00</updated><id>http://localhost:4000/articles/code-highlighting-post</id><content type="html" xml:base="http://localhost:4000/articles/code-highlighting-post/">&lt;p&gt;Syntax highlighting is a feature that displays source code, in different colors and fonts according to the category of terms. This feature facilitates writing in a structured language such as a programming language or a markup language as both structures and syntax errors are visually distinct. Highlighting does not affect the meaning of the text itself; it is intended only for human readers.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;/div&gt;</content><author><name>Billy Rick</name><email>billy@rick.com</email></author><category term="sample-post" /><category term="readability" /><category term="test" /><summary type="html">An article to test overriding the default site author.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{&quot;feature&quot;=&gt;&quot;so-simple-sample-image-7.jpg&quot;, &quot;credit&quot;=&gt;&quot;WeGraphics&quot;, &quot;creditlink&quot;=&gt;&quot;http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/&quot;}" /></entry><entry><title type="html">Syntax Highlighting Post</title><link href="/articles/code-highlighting-post/" rel="alternate" type="text/html" title="Syntax Highlighting Post" /><published>2013-08-16T00:00:00+02:00</published><updated>2013-08-16T00:00:00+02:00</updated><id>/articles/code-highlighting-post</id><content type="html" xml:base="/articles/code-highlighting-post/">&lt;p&gt;Syntax highlighting is a feature that displays source code, in different colors and fonts according to the category of terms. This feature facilitates writing in a structured language such as a programming language or a markup language as both structures and syntax errors are visually distinct. Highlighting does not affect the meaning of the text itself; it is intended only for human readers.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;highlighted-code-blocks&quot;&gt;Highlighted Code Blocks&lt;/h3&gt;
 
@@ -200,7 +541,7 @@ To add new posts, simply add a file in the _posts directory that follows the con
       &lt;p&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Syntax_highlighting&quot;&gt;http://en.wikipedia.org/wiki/Syntax_highlighting&lt;/a&gt; &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><category term="sample-post" /><category term="code" /><category term="highlighting" /><summary type="html">Demo post displaying the various ways of highlighting code in Markdown.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000{&quot;feature&quot;=&gt;&quot;so-simple-sample-image-5.jpg&quot;, &quot;credit&quot;=&gt;&quot;WeGraphics&quot;, &quot;creditlink&quot;=&gt;&quot;http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/&quot;}" /></entry><entry><title type="html">Sample Link Post</title><link href="http://localhost:4000/articles/sample-link-post/" rel="alternate" type="text/html" title="Sample Link Post" /><published>2013-08-12T00:00:00+02:00</published><updated>2013-08-12T00:00:00+02:00</updated><id>http://localhost:4000/articles/sample-link-post</id><content type="html" xml:base="http://localhost:4000/articles/sample-link-post/">&lt;p&gt;So Simple Theme now supports &lt;strong&gt;link posts&lt;/strong&gt;, made famous by John Gruber. To activate just add &lt;code class=&quot;highlighter-rouge&quot;&gt;link: http://url-you-want-linked&lt;/code&gt; to the post’s YAML front matter and you’re done.&lt;/p&gt;</content><category term="sample-post" /><category term="link-post" /><summary type="html">Example and code for using link posts.</summary></entry><entry><title type="html">A Post with a Video</title><link href="http://localhost:4000/articles/video-post/" rel="alternate" type="text/html" title="A Post with a Video" /><published>2013-06-25T00:00:00+02:00</published><updated>2013-06-25T00:00:00+02:00</updated><id>http://localhost:4000/articles/video-post</id><content type="html" xml:base="http://localhost:4000/articles/video-post/">&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;//www.youtube.com/embed/pdSp4Y4GOQs&quot; frameborder=&quot;0&quot;&gt; &lt;/iframe&gt;
+&lt;/div&gt;</content><category term="sample-post" /><category term="code" /><category term="highlighting" /><summary type="html">Demo post displaying the various ways of highlighting code in Markdown.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{&quot;feature&quot;=&gt;&quot;so-simple-sample-image-5.jpg&quot;, &quot;credit&quot;=&gt;&quot;WeGraphics&quot;, &quot;creditlink&quot;=&gt;&quot;http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/&quot;}" /></entry><entry><title type="html">Sample Link Post</title><link href="/articles/sample-link-post/" rel="alternate" type="text/html" title="Sample Link Post" /><published>2013-08-12T00:00:00+02:00</published><updated>2013-08-12T00:00:00+02:00</updated><id>/articles/sample-link-post</id><content type="html" xml:base="/articles/sample-link-post/">&lt;p&gt;So Simple Theme now supports &lt;strong&gt;link posts&lt;/strong&gt;, made famous by John Gruber. To activate just add &lt;code class=&quot;highlighter-rouge&quot;&gt;link: http://url-you-want-linked&lt;/code&gt; to the post’s YAML front matter and you’re done.&lt;/p&gt;</content><category term="sample-post" /><category term="link-post" /><summary type="html">Example and code for using link posts.</summary></entry><entry><title type="html">A Post with a Video</title><link href="/articles/video-post/" rel="alternate" type="text/html" title="A Post with a Video" /><published>2013-06-25T00:00:00+02:00</published><updated>2013-06-25T00:00:00+02:00</updated><id>/articles/video-post</id><content type="html" xml:base="/articles/video-post/">&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;//www.youtube.com/embed/pdSp4Y4GOQs&quot; frameborder=&quot;0&quot;&gt; &lt;/iframe&gt;
 
 &lt;p&gt;Video embeds are responsive and scale with the width of the main content block with the help of &lt;a href=&quot;http://fitvidsjs.com/&quot;&gt;FitVids&lt;/a&gt;.&lt;/p&gt;
 
@@ -210,7 +551,7 @@ To add new posts, simply add a file in the _posts directory that follows the con
 
 &lt;p&gt;And here’s a Vimeo embed for testing purposes.&lt;/p&gt;
 
-&lt;iframe src=&quot;//player.vimeo.com/video/98146708?title=0&amp;amp;byline=0&quot; width=&quot;500&quot; height=&quot;281&quot; frameborder=&quot;0&quot;&gt; &lt;/iframe&gt;</content><category term="sample-post" /><category term="video" /><summary type="html">Custom written post descriptions are the way to go... if you're not lazy.</summary></entry><entry><title type="html">Post with Large Feature Image and Text</title><link href="http://localhost:4000/articles/readability-feature-post/" rel="alternate" type="text/html" title="Post with Large Feature Image and Text" /><published>2013-05-23T00:00:00+02:00</published><updated>2013-05-23T00:00:00+02:00</updated><id>http://localhost:4000/articles/readability-feature-post</id><content type="html" xml:base="http://localhost:4000/articles/readability-feature-post/">&lt;p&gt;This is a sample post with a large feature image up top and tons of text. Odio ad blue bottle vinyl, 90’s narwhal commodo bitters pour-over nostrud. Ugh est hashtag in, fingerstache adipisicing laboris esse Pinterest shabby chic Portland. Shoreditch bicycle rights anim, flexitarian laboris put a bird on it vinyl cupidatat narwhal. Hashtag artisan skateboard, flannel Bushwick nesciunt salvia aute fixie do plaid post-ironic dolor McSweeney’s. Cliche pour-over chambray nulla four loko skateboard sapiente hashtag.&lt;/p&gt;
+&lt;iframe src=&quot;//player.vimeo.com/video/98146708?title=0&amp;amp;byline=0&quot; width=&quot;500&quot; height=&quot;281&quot; frameborder=&quot;0&quot;&gt; &lt;/iframe&gt;</content><category term="sample-post" /><category term="video" /><summary type="html">Custom written post descriptions are the way to go... if you're not lazy.</summary></entry><entry><title type="html">Post with Large Feature Image and Text</title><link href="/articles/readability-feature-post/" rel="alternate" type="text/html" title="Post with Large Feature Image and Text" /><published>2013-05-23T00:00:00+02:00</published><updated>2013-05-23T00:00:00+02:00</updated><id>/articles/readability-feature-post</id><content type="html" xml:base="/articles/readability-feature-post/">&lt;p&gt;This is a sample post with a large feature image up top and tons of text. Odio ad blue bottle vinyl, 90’s narwhal commodo bitters pour-over nostrud. Ugh est hashtag in, fingerstache adipisicing laboris esse Pinterest shabby chic Portland. Shoreditch bicycle rights anim, flexitarian laboris put a bird on it vinyl cupidatat narwhal. Hashtag artisan skateboard, flannel Bushwick nesciunt salvia aute fixie do plaid post-ironic dolor McSweeney’s. Cliche pour-over chambray nulla four loko skateboard sapiente hashtag.&lt;/p&gt;
 
 &lt;p&gt;Vero laborum commodo occupy. Semiotics voluptate mumblecore pug. Cosby sweater ullamco quinoa ennui assumenda, sapiente occupy delectus lo-fi. Ea fashion axe Marfa cillum aliquip. Retro Bushwick keytar cliche. Before they sold out sustainable gastropub Marfa readymade, ethical Williamsburg skateboard brunch qui consectetur gentrify semiotics. Mustache cillum irony, fingerstache magna pour-over keffiyeh tousled selfies.&lt;/p&gt;
 
@@ -249,7 +590,7 @@ To add new posts, simply add a file in the _posts directory that follows the con
 
 &lt;p&gt;Occupy et selvage squid, pug brunch blog nesciunt hashtag mumblecore skateboard yr kogi. Ugh small batch swag four loko. Fap post-ironic qui tote bag farm-to-table american apparel scenester keffiyeh vero, swag non pour-over gentrify authentic pitchfork. Schlitz scenester lo-fi voluptate, tote bag irony bicycle rights pariatur vero Vice freegan wayfarers exercitation nisi shoreditch. Chambray tofu vero sed. Street art swag literally leggings, Cosby sweater mixtape PBR lomo Banksy non in pitchfork ennui McSweeney’s selfies. Odd Future Banksy non authentic.&lt;/p&gt;
 
-&lt;p&gt;Aliquip enim artisan dolor post-ironic. Pug tote bag Marfa, deserunt pour-over Portland wolf eu odio intelligentsia american apparel ugh ea. Sunt viral et, 3 wolf moon gastropub pug id. Id fashion axe est typewriter, mlkshk Portland art party aute brunch. Sint pork belly Cosby sweater, deep v mumblecore kitsch american apparel. Try-hard direct trade tumblr sint skateboard. Adipisicing bitters excepteur biodiesel, pickled gastropub aute veniam.&lt;/p&gt;</content><category term="sample-post" /><category term="readability" /><summary type="html">Custom written post descriptions are the way to go... if you're not lazy.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000{&quot;feature&quot;=&gt;&quot;so-simple-sample-image-3.jpg&quot;, &quot;credit&quot;=&gt;&quot;WeGraphics&quot;, &quot;creditlink&quot;=&gt;&quot;http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/&quot;}" /></entry><entry><title type="html">A Post with Images</title><link href="http://localhost:4000/articles/sample-post-images/" rel="alternate" type="text/html" title="A Post with Images" /><published>2013-05-22T00:00:00+02:00</published><updated>2013-05-22T00:00:00+02:00</updated><id>http://localhost:4000/articles/sample-post-images</id><content type="html" xml:base="http://localhost:4000/articles/sample-post-images/">&lt;p&gt;Here are some examples of what a post with images might look like. If you want to display two or three images next to each other responsively use &lt;code class=&quot;highlighter-rouge&quot;&gt;figure&lt;/code&gt; with the appropriate &lt;code class=&quot;highlighter-rouge&quot;&gt;class&lt;/code&gt;. Each instance of &lt;code class=&quot;highlighter-rouge&quot;&gt;figure&lt;/code&gt; is auto-numbered and displayed in the caption.&lt;/p&gt;
+&lt;p&gt;Aliquip enim artisan dolor post-ironic. Pug tote bag Marfa, deserunt pour-over Portland wolf eu odio intelligentsia american apparel ugh ea. Sunt viral et, 3 wolf moon gastropub pug id. Id fashion axe est typewriter, mlkshk Portland art party aute brunch. Sint pork belly Cosby sweater, deep v mumblecore kitsch american apparel. Try-hard direct trade tumblr sint skateboard. Adipisicing bitters excepteur biodiesel, pickled gastropub aute veniam.&lt;/p&gt;</content><category term="sample-post" /><category term="readability" /><summary type="html">Custom written post descriptions are the way to go... if you're not lazy.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{&quot;feature&quot;=&gt;&quot;so-simple-sample-image-3.jpg&quot;, &quot;credit&quot;=&gt;&quot;WeGraphics&quot;, &quot;creditlink&quot;=&gt;&quot;http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/&quot;}" /></entry><entry><title type="html">A Post with Images</title><link href="/articles/sample-post-images/" rel="alternate" type="text/html" title="A Post with Images" /><published>2013-05-22T00:00:00+02:00</published><updated>2013-05-22T00:00:00+02:00</updated><id>/articles/sample-post-images</id><content type="html" xml:base="/articles/sample-post-images/">&lt;p&gt;Here are some examples of what a post with images might look like. If you want to display two or three images next to each other responsively use &lt;code class=&quot;highlighter-rouge&quot;&gt;figure&lt;/code&gt; with the appropriate &lt;code class=&quot;highlighter-rouge&quot;&gt;class&lt;/code&gt;. Each instance of &lt;code class=&quot;highlighter-rouge&quot;&gt;figure&lt;/code&gt; is auto-numbered and displayed in the caption.&lt;/p&gt;
 
 &lt;h2 id=&quot;figures-for-images-or-video&quot;&gt;Figures (for images or video)&lt;/h2&gt;
 
@@ -305,43 +646,4 @@ To add new posts, simply add a file in the _posts directory that follows the con
 	&lt;a href=&quot;http://placehold.it/1200x600.jpg&quot;&gt;&lt;img src=&quot;http://placehold.it/600x300.jpg&quot; alt=&quot;image&quot; /&gt;&lt;/a&gt;
 	&lt;a href=&quot;http://placehold.it/1200x600.jpg&quot;&gt;&lt;img src=&quot;http://placehold.it/600x300.jpg&quot; alt=&quot;image&quot; /&gt;&lt;/a&gt;
 	&lt;figcaption&gt;Three images.&lt;/figcaption&gt;
-&lt;/figure&gt;</content><category term="sample-post" /><category term="images" /><category term="test" /><summary type="html">Examples and code for displaying images in posts.</summary></entry><entry><title type="html">Testing Readability with a Bunch of Text</title><link href="http://localhost:4000/articles/readability-post/" rel="alternate" type="text/html" title="Testing Readability with a Bunch of Text" /><published>2012-05-22T00:00:00+02:00</published><updated>2012-05-22T00:00:00+02:00</updated><id>http://localhost:4000/articles/readability-post</id><content type="html" xml:base="http://localhost:4000/articles/readability-post/">&lt;p&gt;Portland in shoreditch Vice, labore typewriter pariatur hoodie fap sartorial Austin. Pinterest literally occupy Schlitz forage. Odio ad blue bottle vinyl, 90’s narwhal commodo bitters pour-over nostrud. Ugh est hashtag in, fingerstache adipisicing laboris esse Pinterest shabby chic Portland. Shoreditch bicycle rights anim, flexitarian laboris put a bird on it vinyl cupidatat narwhal. Hashtag artisan skateboard, flannel Bushwick nesciunt salvia aute fixie do plaid post-ironic dolor McSweeney’s. Cliche pour-over chambray nulla four loko skateboard sapiente hashtag.&lt;/p&gt;
-
-&lt;p&gt;Vero laborum commodo occupy. Semiotics voluptate mumblecore pug. Cosby sweater ullamco quinoa ennui assumenda, sapiente occupy delectus lo-fi. Ea fashion axe Marfa cillum aliquip. Retro Bushwick keytar cliche. Before they sold out sustainable gastropub Marfa readymade, ethical Williamsburg skateboard brunch qui consectetur gentrify semiotics. Mustache cillum irony, fingerstache magna pour-over keffiyeh tousled selfies.&lt;/p&gt;
-
-&lt;h2 id=&quot;cupidatat-90s-lo-fi-authentic-try-hard&quot;&gt;Cupidatat 90’s lo-fi authentic try-hard&lt;/h2&gt;
-
-&lt;p&gt;In pug Portland incididunt mlkshk put a bird on it vinyl quinoa. Terry Richardson shabby chic +1, scenester Tonx excepteur tempor fugiat voluptate fingerstache aliquip nisi next level. Farm-to-table hashtag Truffaut, Odd Future ex meggings gentrify single-origin coffee try-hard 90’s.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Sartorial hoodie&lt;/li&gt;
-  &lt;li&gt;Labore viral forage&lt;/li&gt;
-  &lt;li&gt;Tote bag selvage&lt;/li&gt;
-  &lt;li&gt;DIY exercitation et id ugh tumblr church-key&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Incididunt umami sriracha, ethical fugiat VHS ex assumenda yr irure direct trade. Marfa Truffaut bicycle rights, kitsch placeat Etsy kogi asymmetrical. Beard locavore flexitarian, kitsch photo booth hoodie plaid ethical readymade leggings yr.&lt;/p&gt;
-
-&lt;p&gt;Aesthetic odio dolore, meggings disrupt qui readymade stumptown brunch Terry Richardson pour-over gluten-free. Banksy american apparel in selfies, biodiesel flexitarian organic meh wolf quinoa gentrify banjo kogi. Readymade tofu ex, scenester dolor umami fingerstache occaecat fashion axe Carles jean shorts minim. Keffiyeh fashion axe nisi Godard mlkshk dolore. Lomo you probably haven’t heard of them eu non, Odd Future Truffaut pug keytar meggings McSweeney’s Pinterest cred. Etsy literally aute esse, eu bicycle rights qui meggings fanny pack. Gentrify leggings pug flannel duis.&lt;/p&gt;
-
-&lt;h2 id=&quot;forage-occaecat-cardigan-qui&quot;&gt;Forage occaecat cardigan qui&lt;/h2&gt;
-
-&lt;p&gt;Fashion axe hella gastropub lo-fi kogi 90’s aliquip +1 veniam delectus tousled. Cred sriracha locavore gastropub kale chips, iPhone mollit sartorial. Anim dolore 8-bit, pork belly dolor photo booth aute flannel small batch. Dolor disrupt ennui, tattooed whatever salvia Banksy sartorial roof party selfies raw denim sint meh pour-over. Ennui eu cardigan sint, gentrify iPhone cornhole.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Whatever velit occaecat quis deserunt gastropub, leggings elit tousled roof party 3 wolf moon kogi pug blue bottle ea. Fashion axe shabby chic Austin quinoa pickled laborum bitters next level, disrupt deep v accusamus non fingerstache.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Tote bag asymmetrical elit sunt. Occaecat authentic Marfa, hella McSweeney’s next level irure veniam master cleanse. Sed hoodie letterpress artisan wolf leggings, 3 wolf moon commodo ullamco. Anim occupy ea labore Terry Richardson. Tofu ex master cleanse in whatever pitchfork banh mi, occupy fugiat fanny pack Austin authentic. Magna fugiat 3 wolf moon, labore McSweeney’s sustainable vero consectetur. Gluten-free disrupt enim, aesthetic fugiat jean shorts trust fund keffiyeh magna try-hard.&lt;/p&gt;
-
-&lt;h2 id=&quot;hoodie-duis&quot;&gt;Hoodie Duis&lt;/h2&gt;
-
-&lt;p&gt;Actually salvia consectetur, hoodie duis lomo YOLO sunt sriracha. Aute pop-up brunch farm-to-table odio, salvia irure occaecat. Sriracha small batch literally skateboard. Echo Park nihil hoodie, aliquip forage artisan laboris. Trust fund reprehenderit nulla locavore. Stumptown raw denim kitsch, keffiyeh nulla twee dreamcatcher fanny pack ullamco 90’s pop-up est culpa farm-to-table. Selfies 8-bit do pug odio.&lt;/p&gt;
-
-&lt;h3 id=&quot;thundercats-ho&quot;&gt;Thundercats Ho!&lt;/h3&gt;
-
-&lt;p&gt;Fingerstache thundercats Williamsburg, deep v scenester Banksy ennui vinyl selfies mollit biodiesel duis odio pop-up. Banksy 3 wolf moon try-hard, sapiente enim stumptown deep v ad letterpress. Squid beard brunch, exercitation raw denim yr sint direct trade. Raw denim narwhal id, flannel DIY McSweeney’s seitan. Letterpress artisan bespoke accusamus, meggings laboris consequat Truffaut qui in seitan. Sustainable cornhole Schlitz, twee Cosby sweater banh mi deep v forage letterpress flannel whatever keffiyeh. Sartorial cred irure, semiotics ethical sed blue bottle nihil letterpress.&lt;/p&gt;
-
-&lt;p&gt;Occupy et selvage squid, pug brunch blog nesciunt hashtag mumblecore skateboard yr kogi. Ugh small batch swag four loko. Fap post-ironic qui tote bag farm-to-table american apparel scenester keffiyeh vero, swag non pour-over gentrify authentic pitchfork. Schlitz scenester lo-fi voluptate, tote bag irony bicycle rights pariatur vero Vice freegan wayfarers exercitation nisi shoreditch. Chambray tofu vero sed. Street art swag literally leggings, Cosby sweater mixtape PBR lomo Banksy non in pitchfork ennui McSweeney’s selfies. Odd Future Banksy non authentic.&lt;/p&gt;
-
-&lt;p&gt;Aliquip enim artisan dolor post-ironic. Pug tote bag Marfa, deserunt pour-over Portland wolf eu odio intelligentsia american apparel ugh ea. Sunt viral et, 3 wolf moon gastropub pug id. Id fashion axe est typewriter, mlkshk Portland art party aute brunch. Sint pork belly Cosby sweater, deep v mumblecore kitsch american apparel. Try-hard direct trade tumblr sint skateboard. Adipisicing bitters excepteur biodiesel, pickled gastropub aute veniam.&lt;/p&gt;</content><category term="sample-post" /><category term="readability" /><category term="test" /><category term="intro" /><summary type="html">A ton of text to test readability.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000{&quot;feature&quot;=&gt;&quot;so-simple-sample-image-2.jpg&quot;, &quot;credit&quot;=&gt;&quot;WeGraphics&quot;, &quot;creditlink&quot;=&gt;&quot;http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/&quot;}" /></entry></feed>
+&lt;/figure&gt;</content><category term="sample-post" /><category term="images" /><category term="test" /><summary type="html">Examples and code for displaying images in posts.</summary></entry></feed>
